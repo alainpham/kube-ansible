@@ -1,0 +1,41 @@
+---
+- name: Ensures /root/install/ dir exists
+  file: 
+    path: /root/install
+    state: directory
+
+- name: Ensures /root/install/tls dir exists
+  file: 
+    path: /root/install/tls
+    state: directory
+
+- name: Copy all yaml files
+  synchronize:
+    src: ../kube-yaml/
+    dest: /root/install/
+
+- name: create self signed certificate for https access
+  shell: |
+    openssl req -x509 \
+    -newkey rsa:2048 \
+    -keyout /root/install/tls/kube.loc.key \
+    -out /root/install/tls/kube.loc.crt \
+    -days 365000 \
+    -nodes \
+    -addext "subjectAltName = DNS:*.kube.loc" \
+    -subj "/CN=*.kube.loc"
+  args:
+    creates: /root/install/tls/kube.loc.key
+
+- name: create self signed certificate for kafka ingress access
+  shell: |
+    openssl req -x509 \
+    -newkey rsa:2048 \
+    -keyout /root/install/tls/event-broker-kafka.key \
+    -out /root/install/tls/event-broker-kafka.crt \
+    -days 365000 \
+    -nodes \
+    -addext "subjectAltName = DNS:*.kube.loc" \
+    -subj "/CN=event-broker-kafka"
+  args:
+    creates: /root/install/tls/event-broker-kafka.key

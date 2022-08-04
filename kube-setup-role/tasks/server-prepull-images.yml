@@ -1,0 +1,12 @@
+---
+- name: images
+  debug:
+    msg: " {{ item.image }} ->  {{ localregistry }}/{{ item.name}}:{{ item.image.split(':').1 }}"
+  loop: "{{ images }}"
+
+
+- name: pull
+  shell: | 
+    docker pull {{ item.image }}
+  loop: "{{ images }}"
+

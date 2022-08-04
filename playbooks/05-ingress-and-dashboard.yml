@@ -1,0 +1,18 @@
+---
+- name: Setup ingress
+  hosts:
+    - masters
+  tasks:
+  - name: Setup ingress
+    include_role:
+      name: kube-setup-role
+      tasks_from: setup-nginx-ingress
+
+- name: Setup dashboard
+  hosts:
+    - masters
+  tasks:
+  - name: Setup dashboard
+    include_role:
+      name: kube-setup-role
+      tasks_from: setup-dashboard

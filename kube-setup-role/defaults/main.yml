@@ -1,0 +1,37 @@
+---
+initial_app_namespaces:
+  - artemis
+  - keycloak
+  - kafka
+
+import_pull_secrets: false
+
+localregistry: registry.work.lan
+
+images:
+  - name : cni
+    image: docker.io/calico/cni:v3.23.1
+  - name: node
+    image: docker.io/calico/node:v3.23.1
+  - name: kube-controllers
+    image: docker.io/calico/kube-controllers:v3.23.1
+  - name: keycloak
+    image: quay.io/keycloak/keycloak:19.0.1
+  - name: metrics-scraper
+    image: kubernetesui/metrics-scraper:v1.0.7
+  - name: dashboard
+    image: kubernetesui/dashboard:v2.5.0
+  - name: traefik
+    image: traefik:2.8.1
+  - name: operator
+    image: quay.io/strimzi/operator:0.30.0
+  - name: kafka
+    image: quay.io/strimzi/kafka:0.30.0-kafka-3.2.0
+  - name: controller
+    image: registry.k8s.io/ingress-nginx/controller:v1.3.0
+  - name: kube-webhook-certgen
+    image: registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+  - name: kafka-ui
+    image: provectuslabs/kafka-ui:v0.4.0
+  - name: kafdrop
+    image: obsidiandynamics/kafdrop:3.30.0

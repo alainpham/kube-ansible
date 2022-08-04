@@ -1,0 +1,13 @@
+---
+- name: Create kafka cluster
+  shell: |
+    kubectl apply -n kafka -f /root/install/strimzi-kafka/event-broker.yaml
+    kubectl apply -n kafka -f /root/install/strimzi-kafka/kafka-user.yaml
+
+- name: Create kafka ui
+  shell: |
+    kubectl apply -n kafka -f /root/install/strimzi-kafka/kafka-ui.yaml
+
+- name: Create kafdrop
+  shell: |
+    kubectl apply -n kafka -f /root/install/strimzi-kafka/kafdrop.yaml

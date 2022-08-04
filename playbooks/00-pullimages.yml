@@ -1,0 +1,13 @@
+---
+- name: pull push
+  hosts:
+    - localhost
+  tasks:
+  - name: pull
+    include_role:
+      name: kube-setup-role
+      tasks_from: server-prepull-images
+  - name: push
+    include_role:
+      name: kube-setup-role
+      tasks_from: server-push-images-to-local

@@ -1,0 +1,13 @@
+---
+#ingress 
+- name: Create initial namespaces
+  shell: | 
+    kubectl create ns ingress-nginx  --dry-run=client -o yaml | kubectl apply -f -
+
+- name: create self signed certificate in kube
+  shell: |
+    kubectl -n ingress-nginx create  secret tls nginx-ingress-tls  --key="/root/install/tls/kube.loc.key"   --cert="/root/install/tls/kube.loc.crt"  --dry-run=client -o yaml | kubectl apply -f -
+
+- name: install nginx ingress controller
+  shell: kubectl apply -f /root/install/nginx.yml
+

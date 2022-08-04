@@ -1,0 +1,26 @@
+---
+masters:
+  hosts:
+    master:
+      ansible_connection: ssh
+      ansible_user: cloud-user
+      ansible_python_interpreter: /usr/bin/python3
+      ansible_become: true
+
+nodes:
+  hosts:
+    node01:
+      ansible_connection: ssh
+      ansible_user: cloud-user
+      ansible_python_interpreter: /usr/bin/python3
+      ansible_become: true
+    node02:
+      ansible_connection: ssh
+      ansible_user: cloud-user
+      ansible_python_interpreter: /usr/bin/python3
+      ansible_become: true
+    node03:
+      ansible_connection: ssh
+      ansible_user: cloud-user
+      ansible_python_interpreter: /usr/bin/python3
+      ansible_become: true

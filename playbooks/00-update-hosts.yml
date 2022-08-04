@@ -1,0 +1,10 @@
+---
+- name: Update Hosts
+  hosts:
+    - all
+  tasks:
+  - name: Update
+    include_role:
+      name: kube-setup-role
+      tasks_from: update-hosts
+

@@ -1,0 +1,45 @@
+---
+
+# Create
+- name: Create initial namespaces
+  shell: | 
+    kubectl create ns {{ item }}  --dry-run=client -o yaml | kubectl apply -f -
+  loop: "{{ initial_app_namespaces }}"
+
+
+#Install keycloak
+- name: Create keycloak namespace
+  shell: kubectl apply -f /root/install/keycloak-ns.yml
+
+# - name: create self signed certificate for keycloak
+#   shell: |
+#     kubectl create secret generic  keycloak-tls --from-file=/root/install/tls/ -n keycloak --dry-run=client -o yaml | kubectl apply -f -
+
+- name: Install keycloak 
+  shell: kubectl apply -f /root/install/keycloak.yml
+
+
+# Install Strimzi Operator
+- name: Deploy Strimzi Operator
+  shell: |
+    sed -i 's/namespace: .*/namespace: kafka/' /root/install/strimzi-kafka/install/cluster-operator/*RoleBinding*.yaml
+    sed -i 's/quay\.io\/strimzi/registry.work.lan/' /root/install/strimzi-kafka/install/cluster-operator/060-Deployment-strimzi-cluster-operator.yaml
+    kubectl create -f /root/install/strimzi-kafka/install/cluster-operator/ -n kafka
+    kubectl replace -f /root/install/strimzi-kafka/install/cluster-operator/ -n kafka
+    kubectl create secret generic kafka-tls --from-file=/root/install/tls/ -n kafka --dry-run=client -o yaml | kubectl apply -f -
+
+
+#create cluster admin user
+
+- name: cluster admin user creation
+  shell: |
+    kubectl apply -f /root/install/kube-admin-user.yml
+
+- name: get admin user token
+  shell: |
+    kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep kubeadm | awk '{print $1}')
+  register: token
+
+- name: print token
+  debug: 
+    var: token.stdout_lines

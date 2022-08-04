@@ -1,0 +1,74 @@
+---
+
+- name: Activate kernel modules
+  copy:
+    src: "../kube-yaml/system/containerd.conf"
+    dest: /etc/modules-load.d/containerd.conf
+
+- name: Network config
+  copy:
+    src: "../kube-yaml/system/99-kubernetes-cri.conf"
+    dest: /etc/sysctl.d/99-kubernetes-cri.conf
+
+- name: Container registry certs
+  copy:
+    src: "../kube-yaml/tls/root-ca.pem"
+    dest: /etc/ssl/certs/root-ca.pem
+
+- name: Update all packages to the latest version
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: Install packages
+  apt:
+    name: 
+      - apt-transport-https
+      - gnupg2
+      - curl
+      - rsync
+    state: present
+
+- name: Add an Kubernetes Apt Signing key
+  shell: "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -"
+
+- name: Add an Docker Containerd Apt Signing key
+  shell: "curl -s https://download.docker.com/linux/debian/gpg | apt-key add -"
+
+
+- name: Add Kubernetes Repo
+  apt_repository:
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+
+- name: Add Kubernetes Repo
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/debian {{ansible_distribution_release}} stable
+    state: present
+
+# Helm install
+- name: Install Helm keys
+  shell: "curl https://baltocdn.com/helm/signing.asc | apt-key add -"
+
+- name: Add Helm Repo
+  apt_repository:
+    repo: deb https://baltocdn.com/helm/stable/debian/ all main
+    state: present
+
+- name: Install Kube packages
+  apt:
+    name: 
+      - containerd.io
+      - kubeadm
+      - kubelet 
+      - kubectl
+      - helm
+    update_cache: yes
+    state: present
+
+- name: Containerd default config
+  shell: "containerd config default | sudo tee /etc/containerd/config.toml"
+
+- name: Reboot
+  reboot:
+    reboot_timeout: 30

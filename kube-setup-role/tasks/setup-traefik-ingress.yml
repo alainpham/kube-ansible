@@ -1,0 +1,15 @@
+---
+#ingress 
+- name: Create initial namespaces
+  shell: | 
+    kubectl create ns traefik  --dry-run=client -o yaml | kubectl apply -f -
+
+- name: create self signed certificate in kube
+  shell: |
+    kubectl create secret tls  traefik-ingress-tls  --key="/root/install/tls/kube.loc.key"   --cert="/root/install/tls/kube.loc.crt" -n traefik  --dry-run=client -o yaml | kubectl apply -f -
+    kubectl create secret generic  traefikcfg  --from-file="/root/install/traefik/traefik.yml" -n traefik  --dry-run=client -o yaml | kubectl apply -f -
+    kubectl create secret generic  traefiktlscfg  --from-file="/root/install/traefik/tls.yml" -n traefik  --dry-run=client -o yaml | kubectl apply -f -
+
+- name: install haproxy ingress controller
+  shell: kubectl apply -f /root/install/traefik-ingress-daemonset.yml
+

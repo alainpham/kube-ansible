@@ -1,0 +1,95 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: "kafka-ui"
+  name: "kafka-ui"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "kafka-ui"
+  strategy:
+    type: "RollingUpdate"
+  template:
+    metadata:
+      labels:
+        app: "kafka-ui"
+    spec:
+      containers:
+      - env:
+        - name: "KAFKA_CLUSTERS_0_NAME"
+          value: "event-broker"
+        - name: "KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS"
+          value: "event-broker-kafka-bootstrap:9092"
+        image: "registry.work.lan/kafka-ui:v0.4.0"
+        imagePullPolicy: "IfNotPresent"
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: "/"
+            port: 8080
+            scheme: "HTTP"
+          initialDelaySeconds: 180
+          successThreshold: 1
+        name: "kafka-ui"
+        ports:
+        - containerPort: 8080
+          name: "http"
+          protocol: "TCP"
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: "/"
+            port: 8080
+            scheme: "HTTP"
+          initialDelaySeconds: 180
+          successThreshold: 1
+        # resources:
+          # limits:
+          #   cpu: "1"
+          #   memory: "256Mi"
+          # requests:
+          #   cpu: "0.2"
+          #   memory: "256Mi"
+        securityContext:
+          privileged: false
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  labels:
+    app: "kafka-ui"
+  name: "kafka-ui"
+spec:
+  ports:
+  - name: "http"
+    port: 8080
+    protocol: "TCP"
+    targetPort: 8080
+  selector:
+    app: "kafka-ui"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kafka-ui
+  labels:
+    app: "kafka-ui"
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: kafka-ui.kube.loc
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kafka-ui
+            port:
+              number: 8080
