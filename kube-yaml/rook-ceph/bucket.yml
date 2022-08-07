@@ -1,0 +1,8 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: default-s3-bucket
+  namespace: rook-ceph
+spec:
+  generateBucketName: default-s3-bucket
+  storageClassName: rook-ceph-s3

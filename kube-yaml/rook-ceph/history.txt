@@ -1,0 +1,126 @@
+  320  kubectl create -f crds.yaml
+  321  kubectl create -f common.yaml
+  322  kubectl create -f operator.yaml
+  326  kubectl apply -f operator.yaml
+  327  kubectl delete -f operator.yaml
+  329  kubectl apply -f operator.yaml
+  330  kubectl get all -n rook-ceph
+  331  kubectl -n rook-ceph get pod
+  332  kubectl config set-context --current --namespace rook-ceph
+  341  kubectl create -f cluster.yaml
+  342  kubectl get pods -n rook-ceph -w
+  343  kubectl get pods -n rook-ceph
+  344  kubectl get pods -n rook-ceph
+  345  kubectl get pods -n rook-ceph
+  346  kubectl get pods -n rook-ceph
+  347  kubectl get pods -n rook-ceph
+  348  kubectl get pods -n rook-ceph
+  349  kubectl get pods -n rook-ceph
+  350  kubectl get pods -n rook-ceph
+  351  kubectl get pods -n rook-ceph
+  352  kubectl get pods -n rook-ceph
+  353  kubectl get pods -n rook-ceph
+  354  kubectl get pods -n rook-ceph
+  355  kubectl get pods -n rook-ceph
+  356  kubectl get pods -n rook-ceph
+  357  kubectl get pods -n rook-ceph
+  358  kubectl get pods -n rook-ceph
+  359  kubectl get pods -n rook-ceph
+  360  kubectl get pods -n rook-ceph
+  361  kubectl get pods -n rook-ceph
+  362  kubectl get pods -n rook-ceph
+  363  kubectl get pods -n rook-ceph
+  364  kubectl get pods -n rook-ceph
+  365  kubectl get pods -n rook-ceph
+  366  kubectl get pods -n rook-ceph
+  367  kubectl get pods -n rook-ceph
+  368  kubectl get pods -n rook-ceph
+  369  kubectl get pods -n rook-ceph
+  370  kubectl get pods -n rook-ceph
+  371  kubectl get pods -n rook-ceph
+  372  kubectl get pods -n rook-ceph
+  373  kubectl get pods -n rook-ceph
+  374  kubectl get pods -n rook-ceph
+  375  kubectl get pods -n rook-ceph
+  376  kubectl get pods -n rook-ceph
+  377  kubectl get pods -n rook-ceph
+  378  kubectl get pods -n rook-ceph
+  379  kubectl get pods -n rook-ceph
+  380  kubectl get pods -n rook-ceph
+  381  kubectl get pods -n rook-ceph
+  382  kubectl get pods -n rook-ceph
+  383  kubectl get pods -n rook-ceph
+  384  kubectl get pods -n rook-ceph
+  385  kubectl get pods -n rook-ceph
+  386  kubectl get pods -n rook-ceph
+  387  kubectl get pods -n rook-ceph
+  388  kubectl get pods -n rook-ceph
+  389  kubectl get pods -n rook-ceph
+  390  kubectl get pods -n rook-ceph
+  391  kubectl get pods -n rook-ceph
+  392  kubectl get pods -n rook-ceph
+  393  kubectl get pods -n rook-ceph
+  394  kubectl get pods -n rook-ceph
+  395  kubectl get pods -n rook-ceph
+  396  kubectl get pods -n rook-ceph
+  397  kubectl get pods -n rook-ceph
+  398  kubectl get pods -n rook-ceph
+  399  kubectl get pods -n rook-ceph
+  400  kubectl get pods -n rook-ceph
+  401  kubectl get pods -n rook-ceph
+  402  kubectl get pods -n rook-ceph
+  403  kubectl get pods -n rook-ceph
+  404  kubectl get pods -n rook-ceph
+  405  kubectl get pods -n rook-ceph
+  406  kubectl get pods -n rook-ceph
+  407  kubectl get pods -n rook-ceph
+  408  kubectl get pods -n rook-ceph
+  409  kubectl get pods -n rook-ceph
+  410  kubectl get pods -n rook-ceph
+  411  kubectl get pods -n rook-ceph
+  412  kubectl get pods -n rook-ceph
+  413  kubectl get pods -n rook-ceph
+  414  kubectl get pods -n rook-ceph
+  415  kubectl get pods -n rook-ceph
+  416  kubectl get pods -n rook-ceph
+  433  kubectl get -n rook-ceph jobs.batch
+  434  kubectl -n rook-ceph get cephcluster
+  436  kubectl  apply  -f toolbox.yaml
+  438  kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash
+  440  kubectl  create  -f csi/rbd/storageclass.yaml
+  442  kubectl  create  -f csi/rbd/pvc.yaml
+  443  kubectl get sc
+  444  kubectl port-forward service/rook-ceph-mgr-dashboard 8443:8443 -n rook-ceph
+  445  kubectl get svc -n rook-ceph
+  447  kubectl apply -f rook-ceph-ingress.yml 
+  448  kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
+  455  kubectl apply -f object.yaml 
+  467  kubectl apply -f storageclass-bucket.yml
+  470  kubectl create -f bucket.yml 
+  471  kubectl create -f bucket.yml 
+  472  export AWS_HOST=$(kubectl -n default get cm ceph-bucket -o jsonpath='{.data.BUCKET_HOST}')
+  473  export AWS_ACCESS_KEY_ID=$(kubectl -n default get secret ceph-bucket -o jsonpath='{.data.AWS_ACCESS_KEY_ID}' | base64 --decode)
+  474  export AWS_SECRET_ACCESS_KEY=$(kubectl -n default get secret ceph-bucket -o jsonpath='{.data.AWS_SECRET_ACCESS_KEY}' | base64 --decode)
+  477  kubectl -n rook-ceph get svc -l app=rook-ceph-rgw
+  479  kubectl create -f bucket.yml 
+  484  kubectl delete -f bucket.yml
+  485  kubectl apply -f bucket.yml
+  507  export AWS_HOST=$(kubectl -n default get cm ceph-bucket -o jsonpath='{.data.BUCKET_HOST}')
+  508  export AWS_ACCESS_KEY_ID=$(kubectl -n default get secret ceph-bucket -o jsonpath='{.data.AWS_ACCESS_KEY_ID}' | base64 --decode)
+  509  export AWS_SECRET_ACCESS_KEY=$(kubectl -n default get secret ceph-bucket -o jsonpath='{.data.AWS_SECRET_ACCESS_KEY}' | base64 --decode)
+  510  export AWS_SECRET_ACCESS_KEY=$(kubectl -n default get secret ceph-bucket -o jsonpath='{.data.AWS_SECRET_ACCESS_KEY}' | base64 --decode)
+  511  kubectl get secret ceph-bucket 
+  512  export AWS_HOST=$(kubectl  get cm ceph-bucket -o jsonpath='{.data.BUCKET_HOST}')
+  513  export AWS_ACCESS_KEY_ID=$(kubectl  get secret ceph-bucket -o jsonpath='{.data.AWS_ACCESS_KEY_ID}' | base64 --decode)
+  514  export AWS_SECRET_ACCESS_KEY=$(kubectl  get secret ceph-bucket -o jsonpath='{.data.AWS_SECRET_ACCESS_KEY}' | base64 --decode)
+  520  history | grep kubectl
+  524  history | grep kubectl
+  526  history | grep kubectl
+
+ export AWS_HOST=$(kubectl  -n rook-ceph get cm default-s3-bucket -o jsonpath='{.data.BUCKET_HOST}')
+  export AWS_ACCESS_KEY_ID=$(kubectl -n rook-ceph get secret default-s3-bucket -o jsonpath='{.data.AWS_ACCESS_KEY_ID}' | base64 --decode)
+  export AWS_SECRET_ACCESS_KEY=$(kubectl -n rook-ceph get secret default-s3-bucket -o jsonpath='{.data.AWS_SECRET_ACCESS_KEY}' | base64 --decode)
+
+echo $AWS_HOST
+echo $AWS_ACCESS_KEY_ID
+echo $AWS_SECRET_ACCESS_KEY

@@ -8,6 +8,8 @@ import_pull_secrets: false
 
 localregistry: registry.work.lan
 
+aptcacherproxy: http://work.lan:3142/
+
 images:
   - name : cni
     image: docker.io/calico/cni:v3.23.1
@@ -35,3 +37,21 @@ images:
     image: provectuslabs/kafka-ui:v0.4.0
   - name: kafdrop
     image: obsidiandynamics/kafdrop:3.30.0
+  - name: rook-ceph
+    image: rook/ceph:v1.9.8
+  - name: ceph
+    image: quay.io/ceph/ceph:v16.2.10
+  - name: cephcsi
+    image: quay.io/cephcsi/cephcsi:v3.6.2
+  - name: csi-node-driver-registrar
+    image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.5.1
+  - name: csi-resizer
+    image: registry.k8s.io/sig-storage/csi-resizer:v1.4.0
+  - name: csi-provisioner
+    image: registry.k8s.io/sig-storage/csi-provisioner:v3.1.0
+  - name: csi-snapshotter
+    image: registry.k8s.io/sig-storage/csi-snapshotter:v6.0.1
+  - name: csi-attacher
+    image: registry.k8s.io/sig-storage/csi-attacher:v3.4.0
+  - name: nfsplugin
+    image: registry.k8s.io/sig-storage/nfsplugin:v4.0.0

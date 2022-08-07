@@ -1,0 +1,9 @@
+---
+- name: Setup storage
+  hosts:
+    - master
+  tasks:
+  - name: Setup storage
+    include_role:
+      name: kube-setup-role
+      tasks_from: setup-storage

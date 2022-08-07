@@ -7,9 +7,9 @@
   loop: "{{ initial_app_namespaces }}"
 
 
-#Install keycloak
-- name: Create keycloak namespace
-  shell: kubectl apply -f /root/install/keycloak-ns.yml
+# #Install keycloak
+# - name: Create keycloak namespace
+#   shell: kubectl apply -f /root/install/keycloak-ns.yml
 
 # - name: create self signed certificate for keycloak
 #   shell: |

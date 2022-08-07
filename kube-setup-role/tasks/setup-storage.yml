@@ -1,0 +1,52 @@
+---
+- name: Create CRDS
+  shell: |
+    kubectl apply -f /root/install/rook-ceph/crds.yaml
+
+
+- name: Create common things lke namespaces and RBAC objects
+  shell: |
+    kubectl apply -f /root/install/rook-ceph/common.yaml
+
+- name: Install operator
+  shell: |
+    kubectl apply -f /root/install/rook-ceph/operator.yaml
+
+- name: Install cluster
+  shell: |
+    kubectl apply -f /root/install/rook-ceph/cluster.yaml
+
+- name: Install toolbox
+  shell: |
+    kubectl apply -f /root/install/rook-ceph/toolbox.yaml
+
+- name: Install standard block storageclass
+  shell: |
+    kubectl apply -f /root/install/rook-ceph/storageclass-block.yaml
+
+- name: Install s3 object store
+  shell: |
+    kubectl apply -f /root/install/rook-ceph/object.yaml
+
+- name: Install s3 object storageclass
+  shell: |
+    kubectl apply -f /root/install/rook-ceph/storageclass-s3.yaml
+
+- name: Install default s3 object bucket
+  shell: |
+    kubectl apply -f /root/install/rook-ceph/bucket.yml
+
+- name: Install ingress on ceph manager
+  shell: |
+    kubectl apply -f /root/install/rook-ceph/ingress.yml
+
+- name: Get console password
+  shell: |
+    kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
+  register: rookpassword
+
+- name: print rookpassword
+  debug: 
+    var: rookpassword.stdout_lines
+
+    

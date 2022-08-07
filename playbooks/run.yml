@@ -1,0 +1,22 @@
+# - name: Reset kube
+#   hosts:
+#     - master
+#   vars:
+#     aptcacherproxy: http://work.lan:3142
+#   tasks:
+#     - name: apt cacher on host machine
+#       ansible.builtin.lineinfile:
+#         path: /etc/apt/apt.conf.d/proxy
+#         regexp: '.*Acquire::http.*'
+#         line: Acquire::http { Proxy "{{ aptcacherproxy }}"; }
+
+
+- name: Prepare Hosts
+  hosts:
+    - master
+  tasks:
+  - name: Prepare Kube Hosts
+    include_role:
+      name: kube-setup-role
+      tasks_from: prepare-hosts
+

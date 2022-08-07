@@ -15,10 +15,22 @@
     src: "../kube-yaml/tls/root-ca.pem"
     dest: /etc/ssl/certs/root-ca.pem
 
+- name: apt cacher on host machine
+  ansible.builtin.lineinfile:
+    path: /etc/apt/apt.conf.d/proxy
+    regexp: '.*Acquire::http.*'
+    line: Acquire::http { Proxy "{{ aptcacherproxy }}"; }
+    create: true
+
 - name: Update all packages to the latest version
   apt:
     update_cache: yes
-    upgrade: dist
+    upgrade: full
+
+# - name: Update all packages to the latest version
+#   shell: |
+#     apt update
+#     apt upgrade -y
 
 - name: Install packages
   apt:
